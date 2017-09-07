@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-const multer = require('multer');
+//const multer = require('multer');
 const createError = require('http-errors');
 const debug = require('debug')('app:route/pic');
 
