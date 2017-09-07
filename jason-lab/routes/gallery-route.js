@@ -40,10 +40,9 @@ router.put('/api/gallery/:id', jsonParser, function(req, res, next){
   debug(`PUT: /api/gallery/${req.params.id}`);
   Gallery.findByIdAndUpdate(req.params.id, req.body, {new:true})
     .then(gallery => {
-      if (!req.body){
-        return res.sendStatus(400);
+      if(Object.keys(req.body).length === 0) {
+        return next(createError(400, 'Invalid or missing body'));
       }
-
       res.json(gallery);
     })
     .catch(next);
