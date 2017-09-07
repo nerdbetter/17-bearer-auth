@@ -22,11 +22,10 @@ app.use(require('./routes/gallery-route'));
 
 app.use(require('./lib/error-middleware'));
 
-const PORT = process.env.PORT;
-if (!PORT) {
-  throw new Error('You forgot your .env!');
-}
 if (!module.parent) {
+  const PORT = process.env.PORT;
+  if (!PORT) {
+    throw new Error('You forgot your .env!');
   app.listen(PORT, () => {
     debug(`Listening on ${PORT}`);
   });
