@@ -1,4 +1,3 @@
-
 'use strict';
 
 const express = require('express');
@@ -22,12 +21,13 @@ app.use(require('./routes/gallery-route'));
 
 app.use(require('./lib/error-middleware'));
 
-if (!module.parent) {
-  const PORT = process.env.PORT;
-  if (!PORT) {
-    throw new Error('You forgot your .env!');
-  app.listen(PORT, () => {
-    debug(`Listening on ${PORT}`);
+const PORT = process.env.PORT;
+if (!module.parent){
+  if (!PORT){
+    throw new Error('Forgot to specify PORT');
+  }
+  app.listen(PORT,function(){
+    debug(`Listening on PORT ${PORT}`);
   });
 }
 

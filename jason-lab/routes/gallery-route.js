@@ -51,13 +51,19 @@ router.put('/api/gallery/:id', jsonParser, function(req, res, next){
 router.delete('/api/gallery/:id', function(req, res, next){
   debug('DELETE: /gallery/gallery/');
 
-  Gallery.findByIdAndRemove(req.params.id)
+  Gallery.findById(req.params.id)
     .then((gallery) => {
       if (gallery.userID.toString() !== req.user._id.toString()) {
         debug(`permission denied for ${req.user._id} (owner: ${gallery.userID})`);
         return next(createError(401, 'permission denied'));
       }
-      res.sendStatus(204);
+      if(!gallery){
+        return res.sendStatus(404);
+      }
+      else{
+        gallery.remove()
+          .then(() => res.sendStatus(204));
+      }
     })
     .catch(err => next(err));
 });
